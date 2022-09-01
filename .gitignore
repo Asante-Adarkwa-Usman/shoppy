@@ -1,0 +1,3 @@
+#Ignore files or directories when pushing to github
+
+src/main/resources/application.properties
