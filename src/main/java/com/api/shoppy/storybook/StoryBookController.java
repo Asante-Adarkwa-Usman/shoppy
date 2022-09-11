@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/shoppy/storybook") //the uri for the storybook data
+@RequestMapping(path = "api/shoppy/storybooks") //the uri for the storybook data
 public class StoryBookController {
  private final StoryBookService storyBookService;
 
@@ -18,9 +18,15 @@ public class StoryBookController {
 
     // Get all storybooks
     @GetMapping
-    public List<StoryBook> getStoryBooks() {
-      return storyBookService.getStoryBookList();
+    public List<StoryBook> getStoryBooks(@RequestParam(required = false) String storyBookTitle) {
+        if (storyBookTitle == null) {
+            return storyBookService.getStoryBookList();
+        } else {
+            return storyBookService.storyBookByTitle(storyBookTitle);
+        }
     }
+
+
 
     //Get storybook by id
     @GetMapping(path = "{storyBookId}")
@@ -33,4 +39,18 @@ public class StoryBookController {
     public StoryBook addNewStoryBook(@RequestBody StoryBook storyBook) {
       return storyBookService.addNewStoryBook(storyBook);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

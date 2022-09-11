@@ -17,8 +17,7 @@ public class StoryBookService {
     }
 
     /**
-     *
-      * @return This returns a list of all storybook items
+     * @return This returns a list of all storybook items
      */
 
 
@@ -39,15 +38,25 @@ public class StoryBookService {
 
     //Add a new storybook
     public StoryBook addNewStoryBook(StoryBook storyBook) {
-        Optional<StoryBook> storyBookOptional = storyBookRepository.findStoryBookByTitle(storyBook.getTitle());
+        List<StoryBook> storyBookOptional = storyBookRepository.findStoryBookByTitle(storyBook.getTitle());
 
-        if (storyBookOptional.isPresent()) {
+        if (storyBookOptional.isEmpty()) {
             throw new IllegalArgumentException("Item with title " + storyBook.getTitle() + " already exists");
         }
 
         StoryBook savedStoryBook = storyBookRepository.save(storyBook);
         return savedStoryBook;
 
+    }
+
+    //Get a storybook by its title
+    public List<StoryBook> storyBookByTitle(String storyBookTitle)
+    {
+        List<StoryBook> storyBookOptional = storyBookRepository.findStoryBookByTitle(storyBookTitle);
+        if (storyBookOptional.isEmpty()) {
+            throw new IllegalArgumentException("Item with title " + storyBookTitle + " not found");
+        }
+        return  storyBookRepository.findStoryBookByTitle(storyBookTitle);
     }
 
 
